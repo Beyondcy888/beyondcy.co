@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Beyondcy Dashboard</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="The Beyondcy marketing dashboard is being built. Each brand's performance reports will live here.">
+  <meta name="theme-color" content="#131218">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #131218;
+      --line: #2F2E39;
+      --text: #EEECF4;
+      --text-dim: #9A96AB;
+      --dot: #313d27;              /* dim green grid */
+      --not-started: #6F6C7D;
+      --planned: #4D8DFF;
+      --uploaded: #9ECD59;         /* the Beyondcy green */
+      --gap: 24px;                 /* dot grid spacing */
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      background: var(--ink);
+      color: var(--text);
+      font-family: "Instrument Sans", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(24px, 6vw, 88px);
+    }
+    .logo {
+      display: block;
+      width: auto;
+      height: 30px;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-block: clamp(48px, 10vh, 120px) clamp(32px, 6vh, 64px);
+      max-width: 1400px;
+    }
+    h1 {
+      margin: 0;
+      font-weight: 600;
+      font-size: clamp(3.5rem, 9vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: -0.045em;
+    }
+    p {
+      margin: 20px 0 0;
+      max-width: 34rem;
+      font-size: clamp(1rem, 1.6vw, 1.125rem);
+      line-height: 1.55;
+      color: var(--text-dim);
+    }
+    /* the dot band: a dim green grid with a few dots in the status colours */
+    .band {
+      position: relative;
+      height: calc(var(--gap) * 4);
+      margin-top: clamp(40px, 7vh, 72px);
+      background-image: radial-gradient(circle at center, var(--dot) 1.6px, transparent 2.2px);
+      background-size: var(--gap) var(--gap);
+      overflow: hidden;
+    }
+    .band i {
+      position: absolute;
+      left: calc(var(--x) * var(--gap) + var(--gap) / 2 - 5px);
+      top: calc(var(--y) * var(--gap) + var(--gap) / 2 - 5px);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .band .u { background: var(--uploaded); }
+    .band .p { box-shadow: inset 0 0 0 2px var(--planned); }
+    .band .n { width: 6px; height: 6px; margin: 2px; background: var(--not-started); }
+    @media (prefers-reduced-motion: no-preference) {
+      .band i { animation: breathe 6s ease-in-out infinite; animation-delay: calc(var(--x) * -0.4s); }
+      @keyframes breathe { 50% { opacity: 0.45; } }
+    }
+    footer {
+      font-size: 0.875rem;
+      color: var(--text-dim);
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header><img class="logo" src="logo-beyondcy.png" alt="Beyondcy" width="143" height="30"></header>
+
+  <main>
+    <!-- COPY: edit the headline and description here -->
+    <h1>Stay tuned</h1>
+    <p>The Beyondcy marketing dashboard is being built. Each brand's performance reports will live here.</p>
+    <!-- /COPY -->
+
+    <div class="band" aria-hidden="true">
+      <i class="u" style="--x:3;--y:2"></i>
+      <i class="p" style="--x:7;--y:2"></i>
+      <i class="u" style="--x:11;--y:0"></i>
+      <i class="n" style="--x:4;--y:3"></i>
+      <i class="u" style="--x:15;--y:1"></i>
+      <i class="u" style="--x:19;--y:1"></i>
+      <i class="p" style="--x:23;--y:3"></i>
+      <i class="u" style="--x:28;--y:2"></i>
+      <i class="n" style="--x:33;--y:0"></i>
+      <i class="p" style="--x:37;--y:1"></i>
+      <i class="u" style="--x:42;--y:3"></i>
+      <i class="u" style="--x:48;--y:1"></i>
+      <i class="p" style="--x:53;--y:2"></i>
+    </div>
+  </main>
+
+  <footer>© 2026 Beyondcy Kreatif Global</footer>
+</body>
+</html>
