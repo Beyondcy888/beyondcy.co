@@ -232,10 +232,15 @@ Each folder is self-contained, so it can be pushed as its own repo (GitHub Pages
 - [x] Real app against the live Supabase: signed-out redirect, "Email or password is incorrect.", expired reset link, `/dev-check` signed-out check PASS
 
 ## Phase 14 · Deploy (outward-facing: needs the owner's go-ahead)
-- [ ] Create the 3 GitHub repos (public, as `01` says) and push each folder
-- [ ] `beyondcy-track`: add Actions secrets `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`; Pages source = GitHub Actions
-- [ ] `beyondcy-site`, `beyondcy-dash`: Pages from `main` / root
-- [ ] Custom domain per repo + Enforce HTTPS
+> **5 Nov 2026: the owner pushed everything as ONE repo** (`github.com/Beyondcy888/beyondcy.co`), not 3. Pages runs as one site:
+> `https://beyondcy888.github.io/beyondcy.co/` (site) · `/dash/` · `/track/` (tracker). Workflow: root `.github/workflows/deploy.yml`
+> (the old one in `beyondcy-track/.github/` never ran: GitHub only reads the root `.github/`). `scripts/build-pages.mjs` puts the 3 sites into `_site/`.
+> Tracker: `BASE_PATH` env → Vite `base`, router `basename`, reset-password link. Root `404.html` = tracker shell + guard (deep links).
+- [x] Root workflow + assemble script; paths work under `/beyondcy.co/` (QA'd in headless Chrome, 54 tests pass)
+- [!] Owner: add repo secrets `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (workflow stops with a clear error without them)
+- [!] Owner: commit + push, then check the Actions tab
+- [!] Owner: Supabase Auth redirect URLs add `https://beyondcy888.github.io/beyondcy.co/track/**`
+- [ ] Later, custom domains: subdomains (track./dash.) need separate repos, or move to `beyondcy.co/track/` with `PAGES_ROOT=/`
 - [!] DNS records at the domain provider (owner, `06` §C) + verify the domain in GitHub
 - [ ] Run the acceptance checks in `06` §D with real logins (owner provides them)
 

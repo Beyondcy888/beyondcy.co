@@ -1,0 +1,78 @@
+# Deploys all three sites to GitHub Pages as one site:
+#   https://beyondcy888.github.io/beyondcy.co/         beyondcy-site
+#   https://beyondcy888.github.io/beyondcy.co/dash/    beyondcy-dash
+#   https://beyondcy888.github.io/beyondcy.co/track/   beyondcy-track
+# Needs: Settings → Pages → Source = GitHub Actions, and the repo secrets
+# VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY (Settings → Secrets and variables → Actions).
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  # "/<repo name>/" for a github.io project site; "/" once a custom domain is set.
+  PAGES_ROOT: /${{ github.event.repository.name }}/
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: beyondcy-track/package-lock.json
+
+      - name: Check the Supabase secrets are set
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          if [ -z "$VITE_SUPABASE_URL" ] || [ -z "$VITE_SUPABASE_ANON_KEY" ]; then
+            echo "::error::Add the repo secrets VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY (Settings → Secrets and variables → Actions), then re-run this workflow. Without them the tracker opens as a blank page."
+            exit 1
+          fi
+
+      - name: Install, test and build the tracker
+        working-directory: beyondcy-track
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          BASE_PATH: ${{ env.PAGES_ROOT }}track/
+        run: |
+          npm ci
+          npm test
+          npm run build
+
+      - name: Check the build has no secrets
+        run: |
+          if grep -rIl "service_role" beyondcy-track/dist; then echo "::error::service_role found in the build"; exit 1; fi
+
+      - name: Put the three sites together
+        run: node scripts/build-pages.mjs
+
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
