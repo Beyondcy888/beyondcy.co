@@ -1,2 +1,10 @@
-_site/
+# local junk: never commit (running a dev server here creates .vite/)
+.vite/
 node_modules/
+.DS_Store
+Thumbs.db
+*.log
+
+# secrets: this site has none, keep it that way
+.env
+.env.*
