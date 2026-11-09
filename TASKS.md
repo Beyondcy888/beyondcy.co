@@ -1,11 +1,98 @@
 # Beyondcy build: task list
 
 > **Resuming in a new session?** Read this file first.
+> **Status (9 Nov 2026): splitting the monorepo into 3 repos** (spec `START-DEV-02/docs/10_SPLIT_INTO_3_REPOS.md`): see the first section below.
 > **Status (4 Nov 2026): Update v2 is built and QA'd in mock mode** (spec `START-DEV-02/docs/09_UPDATE_V2.md`, which wins over 00–08). Remaining: the owner's items (real-login `/dev-check`, re-entering targets, Phase 14 deploy). v1 (Phases 0–14 further down) is done except deploy.
 > Next change request? Add a new section here, keep ticking as you go.
 > Tick boxes here as work lands. `[x]` done · `[ ]` to do · `[~]` in progress · `[!]` blocked (needs the owner).
 > Spec v1: `START-DEV-01/` (01–08). SQL (already run by the owner, never re-run, never change the DB): `START-SUPABASE-01/` and `START-DEV-02/supabase/04_update_v2.sql` (+ optional `05_fix_display_names.sql`).
 > Assets: `START-DEV-02/assets/`. Dashboard box style reference: `beyondcy-track/docs/references/ref-3-dashboard-boxes.jpg` (copied from `C:\Users\User\Downloads\dashboard-Reference.jpg`; dark boxes, soft gradient, light top-left edge, mono number, tilted illustration cut off bottom-right; the illustrations are ORIGINAL SVGs in `src/admin/illustrations.jsx`).
+
+---
+
+## Split into 3 repos (START-DEV-02/docs/10_SPLIT_INTO_3_REPOS.md) · started 9 Nov 2026
+
+> `<OLD>` = `D:\BEHOMY\beyondcy.co` · `<WEB>` = `D:\BEHOMY\Beyondcy-Web` (plain folder, not a repo).
+> **Where this list lives:** until S3 it is `<OLD>\TASKS.md`. From S3 on, the live copy is **`<WEB>\beyondcy.co-track\docs\TASKS.md`**, and the copy in `<OLD>` stops being updated.
+> Rules (10): never force-push · never delete `<OLD>` (renamed to `beyondcy.co-OLD` at the end) · never commit `.env.local` or a secret · **no `CNAME` file in any repo yet** · OWNER ACTION = stop, tell the owner exactly what to do, wait.
+> Targets: site `Beyondcy888/beyondcy.co` → https://beyondcy888.github.io/beyondcy.co/ · dash `Beyondcy888/beyondcy.co-dash` → https://beyondcy888.github.io/beyondcy.co-dash/ · track `Beyondcy888/beyondcy.co-track` → https://beyondcy888.github.io/beyondcy.co-track/
+
+### S0 · Inspect and report (no changes)
+- [x] Workflow + script: root `.github/workflows/deploy.yml` builds the tracker with `BASE_PATH=/beyondcy.co/track/`, then `scripts/build-pages.mjs` combines the 3 sites into `_site/` (site `/`, `/dash/`, `/track/`). Both runs (7 Nov, 9 Nov) failed at "Check the Supabase secrets are set", so **nothing was ever deployed**
+- [x] Tracker: Vite `base` from `BASE_PATH` (rename to `VITE_BASE_PATH`); router `basename` from `BASE_URL`; reset link `origin + BASE_URL + 'reset-password'`; `index.html` icons are `/favicon.ico`-style, which Vite rewrites with the base (checked in `dist/`); logos in JSX use `BASE_URL`; manifest paths relative; `public/CNAME` exists (must go)
+- [x] site + dash are plain static (one `index.html`, no `package.json`), icon paths already relative; both have a `CNAME` and tracked junk `.vite/deps/` (from running vite there)
+- [x] No links between the three projects (only Google Fonts links)
+- [x] `CNAME` files: `beyondcy-site/CNAME`, `beyondcy-dash/CNAME`, `beyondcy-track/public/CNAME` (never deployed: the build skipped them). The Pages custom-domain *setting* can't be read without a login → owner checks it (S7c)
+- [x] Live? Every github.io link returns 404 (never deployed), so nobody uses the tracker online: no quiet time needed
+- [x] `git status`: only `START-DEV-02/docs/10_SPLIT_INTO_3_REPOS.md` untracked; `main` = `origin/main` (447a635)
+- [x] Found: `START-DEV-01/08_CONNECT_TO_SUPABASE.md` holds the real publishable key (the tracker's `docs/08` copy was redacted in v1) → redact it in the copy that moves to the tracker docs
+- [x] Found: `deploy.ps1`'s content check matches its own pattern text, which also appears in `docs/deploy.ps1` and the 10 doc → the tracker's first commit is made by hand after a manual secret scan; `deploy.ps1` then pushes it (script kept exactly as given)
+- [x] Report given to the owner + go-ahead (9 Nov: "Go ahead" with Phases 1–6, stop at Phase 7)
+
+### S1 · Safety backup
+- [ ] Commit the 10 doc + this list in `<OLD>`, push `main` (the old workflow will fail at the secrets check again: harmless)
+- [ ] `git pull` · tag `pre-split-backup` · push the tag
+- [ ] Bundle `D:\BEHOMY\beyondcy.co-backup-<yyyymmdd>.bundle` (`git bundle verify` OK)
+- [ ] Untracked files noted: `beyondcy-track/.env.local` (copied in S3); `_site/`, `beyondcy-track/dist/` are build output
+
+### S2 · OWNER: two empty repos
+- [x] `beyondcy.co-dash` and `beyondcy.co-track` exist, public, empty (checked via the GitHub API, 9 Nov)
+
+### S3 · Split dash + track (history kept)
+- [ ] `git subtree split` → `split/track`, `split/dash`
+- [ ] `<WEB>` created; cloned into `beyondcy.co-track` / `beyondcy.co-dash`; branch `main`; `origin` = GitHub repo
+- [ ] `git log --oneline` shows the earlier commits (track 4, dash 2)
+- [ ] `.env.local` copied; `START-DEV-01`, `START-DEV-02`, `START-SUPABASE-01`, `DEPLOY-PLAN.md`, `TASKS.md` copied into `beyondcy.co-track\docs\`; key redacted in `docs/START-DEV-01/08`
+- [ ] `npm install`
+
+### S4a · beyondcy.co-track stands alone
+- [ ] `vite.config.js`: `base: process.env.VITE_BASE_PATH || '/'`
+- [ ] Router basename / reset link / logos already use `BASE_URL` (comments updated, no `/beyondcy.co-track/` hard-coded)
+- [ ] `public/CNAME` deleted
+- [ ] `.gitignore`: `node_modules/`, `dist/`, `.env`, `.env.local`, `.env.*.local` (+ logs, .DS_Store, .vite)
+- [ ] `.github/workflows/deploy.yml` (08 §4, latest majors, tests, `VITE_BASE_PATH: /beyondcy.co-track/`, 404 copy, `service_role` check, secrets check)
+- [ ] `SITE_LINKS` constant (one place, github.io links)
+- [ ] README + docs (00, 01, 06, 07, 08, DEPLOY-PLAN note) updated; 10 + 11 in `docs/`; split recorded in 07
+- [ ] `npm test`, `npm run build`, `npm run dev` OK
+- [ ] github.io build: every URL in `dist/index.html` starts with `/beyondcy.co-track/`; preview: login styled + logo + favicon; deep-link refresh works (GitHub-style 404 server)
+
+### S4b · beyondcy.co-dash
+- [ ] `CNAME` + `.vite/` removed · `.nojekyll` · `.gitignore` · SITE LINKS block · `noindex` kept · README
+
+### S4c · beyondcy.co (portfolio), fresh clone in `<WEB>`
+- [ ] `git rm` the other projects/docs/scripts; `beyondcy-site/*` moved to the root; the moved `CNAME` and `.vite/` removed
+- [ ] Old combined workflow removed · `.nojekyll` · `.gitignore` · SITE LINKS block · README
+- [ ] Commit "Split: this repo now holds only the portfolio" (not pushed)
+
+### S5 · deploy.ps1
+- [ ] `<WEB>\deploy.ps1` = the appendix exactly; copy at `beyondcy.co-track\docs\deploy.ps1`
+- [x] Execution policy: CurrentUser is already `RemoteSigned` (no owner action needed)
+
+### S6 · First push
+- [ ] `.\deploy.ps1 -Message "Split into three repositories"` → all three `pushed`
+
+### S7 · OWNER: GitHub settings
+- [ ] a) `beyondcy.co-track` secrets `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`
+- [ ] b) Pages: site + dash = Deploy from a branch `main` / `(root)`; track = GitHub Actions; re-run "Deploy tracker"
+- [ ] c) Custom domain empty on all three
+
+### S8 · OWNER: Supabase URL configuration
+- [ ] Site URL `https://beyondcy888.github.io/beyondcy.co-track/`; Redirect URLs `…/beyondcy.co-track/**`, `https://track.beyondcy.co/**`, `http://localhost:5173/**`
+
+### S9 · Verify (all must pass)
+- [ ] Portfolio page with logo + favicon
+- [ ] Dash page with `noindex`
+- [ ] Tracker loads with styles, logo, favicon
+- [ ] Tracker login works; refreshing a deep page doesn't 404 or lose styles (owner logs in)
+- [ ] Password-reset email opens `…/beyondcy.co-track/reset-password` (owner)
+- [ ] Links between the sites = github.io addresses
+- [ ] A small change in one folder + `.\deploy.ps1` pushes only that repo; live in ~1–2 min
+- [ ] `git log` in dash + track shows the earlier history
+- [ ] No `.env.local` and no `CNAME` in any GitHub repo
+
+### S10 · Finish
+- [ ] Rename `<OLD>` → `D:\BEHOMY\beyondcy.co-OLD` (owner deletes it after a week; close VS Code on it first if Windows refuses)
+- [ ] Memory + this list updated with the final state
 
 ---
 
