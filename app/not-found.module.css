@@ -1,0 +1,25 @@
+/* 404 page: "404 | This page could not be found." in the middle of the screen,
+   the same layout as the Next.js default 404, in the site's colours and font. */
+.page {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 20px 60px;
+  text-align: center;
+}
+
+.page h1 {
+  margin-right: 20px;
+  padding-right: 23px;
+  border-right: 1px solid var(--color-line);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 49px;
+}
+
+.page p {
+  font-size: 14px;
+  line-height: 49px;
+}

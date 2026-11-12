@@ -1,0 +1,68 @@
+# Deploys the portfolio to GitHub Pages on every push to main.
+#   Now:   https://beyondcy888.github.io/beyondcy.co/
+#   Later: https://beyondcy.co (11_CONNECT_DOMAIN.md deletes the BASE_PATH line below,
+#          and the CNAME part of the check if that file adds a public/CNAME)
+# Needs: Settings → Pages → Source = GitHub Actions. No secrets: the site has none.
+name: Deploy portfolio
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build   # Next.js static export: writes the site to out/
+        env:
+          BASE_PATH: /beyondcy.co   # remove when the domain is connected (file 11)
+
+      - name: Make sure out/.nojekyll exists
+        run: touch out/.nojekyll   # public/.nojekyll already puts it there; this is the safety net
+
+      - name: Check the build has no CNAME and no login page
+        run: |
+          if [ ! -f out/index.html ] || [ ! -f out/404.html ]; then
+            echo "::error::out/index.html or out/404.html is missing: the static export did not finish"
+            exit 1
+          fi
+          if [ -n "$(find out -name CNAME -print -quit)" ]; then
+            echo "::error::out/ contains a CNAME file. The domain is not connected yet (11_CONNECT_DOMAIN.md): remove public/CNAME"
+            exit 1
+          fi
+          if [ -n "$(find out -iname 'login*' -print -quit)" ]; then
+            echo "::error::out/ contains a login page. It is not connected yet: keep it in app/_login (not app/login)"
+            find out -iname 'login*'
+            exit 1
+          fi
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: out
+          include-hidden-files: true   # keeps out/.nojekyll in the upload
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

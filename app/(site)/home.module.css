@@ -1,0 +1,409 @@
+/* Ukuran mengikuti desain desktop 1440px & ponsel 402px. */
+.page {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 760px;
+  max-height: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.heroText {
+  position: relative;
+  z-index: 1;
+  padding: 0 20px;
+  margin-top: 180px;
+}
+
+.kicker {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-green);
+}
+
+.lead {
+  margin-top: 36px;
+  font-size: 24px;
+}
+
+.headline {
+  margin-top: 38px;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 60px;
+  letter-spacing: -0.01em;
+  /* Lapisan 1: kilau cahaya yang menyapu. Lapisan 2: gradasi hijau → ungu dari desain. */
+  background:
+    linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.85) 50%, transparent 58%),
+    linear-gradient(90deg, #9ecd5a 0%, #8f9a85 42%, #8472b6 72%, #7f60c8 100%);
+  background-size: 250% 100%, 130% 100%;
+  background-position: 160% 0, 0% 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 7px rgba(170, 190, 150, 0.45));
+  /* Berulang terus: kilau menyapu teks tiap ±6 detik, gradasi mengalir pelan */
+  animation: heroLoop 12s ease-in-out 2.6s infinite;
+}
+
+.headline span {
+  display: block;
+}
+
+@keyframes heroLoop {
+  0% {
+    background-position: 160% 0, 0% 0;
+  }
+  18% {
+    background-position: -60% 0, 25% 0;
+  }
+  50% {
+    background-position: -60% 0, 100% 0;
+  }
+  50.01% {
+    background-position: 160% 0, 100% 0;
+  }
+  68% {
+    background-position: -60% 0, 75% 0;
+  }
+  100% {
+    background-position: -60% 0, 0% 0;
+  }
+}
+
+/* "We're Beyondcy" bercahaya lembut berulang */
+.kicker {
+  animation: kickerGlow 6s ease-in-out 2.6s infinite;
+}
+
+@keyframes kickerGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 0 rgba(158, 205, 90, 0);
+  }
+  50% {
+    text-shadow: 0 0 18px rgba(158, 205, 90, 0.55);
+  }
+}
+
+/* Cahaya latar hero bergerak pelan seperti bernapas */
+.driftA {
+  animation: driftA 9s ease-in-out infinite alternate;
+}
+
+.driftB {
+  animation: driftB 11s ease-in-out infinite alternate;
+}
+
+@keyframes driftA {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(180px, 120px) scale(1.3);
+  }
+}
+
+@keyframes driftB {
+  from {
+    transform: translate(0, 0) scale(1.05);
+  }
+  to {
+    transform: translate(-200px, -140px) scale(0.85);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headline,
+  .kicker,
+  .driftA,
+  .driftB {
+    animation: none;
+  }
+}
+
+/* ---------- ORBIT ---------- */
+.process {
+  position: relative;
+  height: 1150px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.orbit {
+  position: absolute;
+  top: 130px;
+  left: -46px;
+  width: 1387px;
+  height: 887px;
+  max-width: none;
+  pointer-events: none;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+}
+
+.step {
+  position: absolute;
+  text-align: center;
+  color: var(--color-green);
+  transform: translateX(-50%);
+}
+
+.step h2 {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 40px;
+}
+
+.step p {
+  margin-top: 4px;
+  font-size: 22px;
+  line-height: 30px;
+}
+
+.deliver {
+  top: 365px;
+  left: 1068px;
+  width: 280px;
+}
+.design {
+  top: 490px;
+  left: 789px;
+  width: 320px;
+}
+.discover {
+  top: 637px;
+  left: 435px;
+  width: 460px;
+}
+
+/* ---------- OUR SERVICES ---------- */
+.services {
+  position: relative;
+  padding-top: 70px;
+}
+
+.servicesTitle {
+  text-align: center;
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 80px;
+  letter-spacing: -0.01em;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 351px);
+  justify-content: center;
+  column-gap: 74px;
+  row-gap: 32px;
+  align-items: start;
+  margin-top: 44px;
+}
+
+/* ---------- PENUTUP ---------- */
+.closing {
+  padding: 220px 20px 190px;
+  text-align: center;
+}
+
+.closing h2 {
+  max-width: 1000px;
+  margin: 0 auto;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 63px;
+  letter-spacing: -0.01em;
+}
+
+.closing p {
+  margin-top: 12px;
+  font-size: 28px;
+}
+
+.closing hr {
+  width: 390px;
+  margin: 36px auto 145px;
+  border: none;
+  border-top: 1px solid #1c1c1c;
+}
+
+/* ================= PONSEL ================= */
+@media (max-width: 899px) {
+  .hero {
+    height: 900px;
+    min-height: 0;
+    max-height: none;
+    align-items: flex-start;
+  }
+
+  /* HP: cahaya ungu (kiri atas) & hijau (kanan bawah) seperti desktop,
+     lebih kecil & tipis, bergerak pelan */
+  .driftA {
+    top: -150px !important;
+    left: -230px !important;
+    width: 520px !important;
+    height: 520px !important;
+    opacity: 0.75;
+    animation-name: driftAm;
+  }
+
+  .driftB {
+    top: 540px !important;
+    right: -260px !important;
+    width: 560px !important;
+    height: 560px !important;
+    opacity: 0.7;
+    animation-name: driftBm;
+  }
+
+  @keyframes driftAm {
+    from {
+      transform: translate(0, 0) scale(1);
+    }
+    to {
+      transform: translate(70px, 60px) scale(1.15);
+    }
+  }
+
+  @keyframes driftBm {
+    from {
+      transform: translate(0, 0) scale(1.05);
+    }
+    to {
+      transform: translate(-80px, -70px) scale(0.9);
+    }
+  }
+
+  .heroText {
+    margin-top: 345px;
+    padding: 0 60px;
+  }
+
+  .kicker {
+    font-size: 20px;
+  }
+
+  .lead {
+    max-width: 250px;
+    margin: 18px auto 0;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .headline {
+    max-width: 280px;
+    margin: 20px auto 0;
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .headline span {
+    display: inline;
+  }
+
+  /* --stage-scale = lebar layar / 402 (diisi oleh Orbit.js) */
+  .process {
+    height: calc(640px * var(--stage-scale, 1));
+    margin-top: 20px;
+    overflow: hidden;
+  }
+
+  .stage {
+    inset: auto;
+    top: 0;
+    left: 0;
+    width: 402px;
+    height: 640px;
+    transform: scale(var(--stage-scale, 1));
+    transform-origin: 0 0;
+  }
+
+  /* HP sama seperti desktop: orbit TIDAK diputar, rasio sama dengan desktop,
+     ujung hijau tiap lengkungan terlihat di kanan. */
+  .orbit {
+    top: 40px;
+    left: -241px;
+    width: 700px;
+    height: 448px;
+    transform: none;
+  }
+
+  /* Label seperti desktop: tiap label di dalam lengkungannya, diagonal naik ke kanan */
+  .step {
+    transform: none;
+  }
+
+  .step h2 {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .step p {
+    margin-top: 0;
+    font-size: 13px;
+    line-height: 17px;
+  }
+
+  .deliver {
+    top: 156px;
+    left: 268px;
+    width: 108px;
+  }
+  .design {
+    top: 216px;
+    left: 138px;
+    width: 116px;
+  }
+  .discover {
+    top: 292px;
+    left: 10px;
+    width: 112px;
+  }
+
+  .services {
+    padding: 0 26px;
+  }
+
+  .servicesTitle {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+    margin-top: 24px;
+  }
+
+  .closing {
+    padding: 180px 26px 60px;
+  }
+
+  .closing h2 {
+    max-width: 345px;
+    font-size: 22px;
+    line-height: 29px;
+  }
+
+  .closing p {
+    margin: 25px 0 18px;
+    font-size: 18px;
+  }
+}

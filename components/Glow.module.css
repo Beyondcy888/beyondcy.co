@@ -1,0 +1,14 @@
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.purple {
+  background: radial-gradient(closest-side, var(--glow-purple), rgba(70, 61, 91, 0) 100%);
+}
+
+.green {
+  background: radial-gradient(closest-side, var(--glow-green), rgba(74, 92, 45, 0) 100%);
+}

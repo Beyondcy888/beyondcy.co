@@ -1,0 +1,781 @@
+/* =====================================================================
+   WORK — ukuran & posisi mengikuti desain desktop 1440px.
+   Versi ponsel: desain belum ada, jadi disusun mengikuti gaya
+   halaman ponsel lain (Home/About/Contact).
+   ===================================================================== */
+.page {
+  position: relative;
+  overflow-x: clip;
+}
+
+.sectionTitle {
+  font-size: 52px;
+  font-weight: 600;
+  line-height: 63px;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.tags {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 30px;
+  color: var(--color-green);
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  height: 900px;
+  max-height: 100vh;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 20px 0;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 80px;
+  letter-spacing: -0.01em;
+}
+
+/* "Brand Translator": gradasi mengalir pelan */
+.flow {
+  background-size: 200% 100%;
+  animation: flow 8s ease-in-out 2s infinite alternate;
+}
+
+@keyframes flow {
+  from {
+    background-position: 0% 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}
+
+.line {
+  display: block;
+}
+
+/* Gambar iPad di dalam pembungkus animasinya */
+.ipad img {
+  width: 100%;
+  height: auto;
+}
+
+/* Hover logo klien & media */
+.clientRow img,
+.mediaRow img {
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.4s ease;
+}
+
+.clientRow li:hover img,
+.mediaRow li:hover img {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 12px rgba(158, 205, 90, 0.45));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow {
+    animation: none;
+  }
+}
+
+/* ---------- WHAT WE'VE PROVIDE ---------- */
+.provide {
+  position: relative;
+  height: 1150px;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 584px 1fr;
+  padding-left: 117px;
+}
+
+.provideText,
+.provideList {
+  position: relative;
+  z-index: 1;
+}
+
+.provideText {
+  padding-top: 288px;
+}
+
+.provideText h2 {
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 63px;
+}
+
+.provideText p {
+  margin-top: 24px;
+  font-size: 20px;
+}
+
+.provideList {
+  padding-top: 405px;
+}
+
+.provideList ul {
+  list-style: none;
+}
+
+.provideList li {
+  width: fit-content;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 78px;
+  letter-spacing: -0.01em;
+  background: linear-gradient(90deg, #fff 55%, #a9a9a9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.provideList p {
+  margin-top: 34px;
+  font-size: 22px;
+}
+
+/* ---------- TRUSTED BY ---------- */
+.clients {
+  position: relative;
+  z-index: 1; /* di atas cahaya latar dari section sebelumnya */
+  padding: 140px 20px 0;
+}
+
+.clients .sectionTitle {
+  max-width: 720px;
+  margin: 0 auto;
+  font-weight: 700;
+  line-height: 60px;
+}
+
+.clientRows {
+  display: flex;
+  flex-direction: column;
+  gap: 92px;
+  margin-top: 100px;
+}
+
+.clientRow {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1175px;
+  margin: 0 auto;
+}
+
+.clientRow:first-child {
+  max-width: 1002px;
+}
+
+.clientRow img {
+  width: var(--w);
+  height: auto;
+}
+
+.more {
+  margin-top: 100px;
+  text-align: center;
+  font-size: 24px;
+}
+
+/* ---------- SEO ---------- */
+/* SEO: teks di atas, dua laptop sama besar di bawahnya (simetris) */
+.seo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+  padding-bottom: 90px;
+}
+
+.seo > .seoText {
+  order: -1;
+  width: 100%;
+}
+
+/* Dua perangkat berdampingan dengan tinggi sama → ukuran tampak setara */
+.devicePair {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(60px, 8vw, 140px);
+  width: 100%;
+  margin-top: 80px;
+  padding: 0 40px;
+}
+
+.devicePair img {
+  width: auto;
+  height: min(520px, 34vw);
+}
+
+.seoText {
+  position: relative;
+  z-index: 2;
+  padding-top: 108px;
+}
+
+.seoBody {
+  max-width: 500px;
+  margin: 72px auto 0;
+  text-align: center;
+  font-size: 22px;
+  line-height: 30px;
+}
+
+/* ---------- EVENT ORGANIZER ---------- */
+.events {
+  position: relative;
+  z-index: 2;
+  padding: 40px 47px 0;
+}
+
+.eventTags {
+  font-size: 24px;
+}
+
+.eventGrid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 664px));
+  justify-content: center;
+  gap: 20px 17px;
+  margin-top: 38px;
+}
+
+.eventCard > * {
+  position: relative;
+  display: block;
+  height: 194px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.eventImg {
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Hover: foto sedikit membesar, panah bergeser */
+.eventCard:hover .eventImg {
+  transform: scale(1.06);
+}
+
+.eventCaption svg {
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.eventCard:hover .eventCaption svg {
+  transform: translate(3px, -3px);
+}
+
+/* Gradasi ungu di bawah foto + teks keterangan */
+.eventCard > *::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(140, 122, 178, 0.92) 0%, rgba(140, 122, 178, 0.35) 30%, rgba(140, 122, 178, 0) 55%);
+}
+
+.eventCaption {
+  position: absolute;
+  left: 18px;
+  bottom: 13px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
+}
+
+.eventCaption svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ---------- PR & MEDIA ---------- */
+/* Latar section berada di lapisan ::before yang memudar halus di atas & bawah
+   (tidak ada batas kotak yang tajam). Warnanya diatur lewat --bg. */
+.media,
+.uiux {
+  position: relative;
+  isolation: isolate;
+}
+
+.media::before,
+.uiux::before {
+  content: "";
+  position: absolute;
+  /* lebih lebar dari layar (40% di kiri & kanan) → saat bergeser, tepinya tak pernah terlihat */
+  inset: -140px -40%;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--bg);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  /* Gradasi latar bergerak pelan (warna tetap sama) */
+  will-change: transform;
+  animation: bgDrift 10s ease-in-out infinite alternate;
+}
+
+.uiux::before {
+  animation-duration: 12s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes bgDrift {
+  from {
+    transform: translate3d(-6%, -5%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(6%, 7%, 0) scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media::before,
+  .uiux::before {
+    animation: none;
+  }
+}
+
+.media {
+  margin-top: 0;
+  padding-top: 165px;
+  height: 1090px;
+  --bg:
+    radial-gradient(520px 380px at 56.7% 50%, rgba(112, 145, 66, 0.75), rgba(112, 145, 66, 0) 100%),
+    radial-gradient(900px 420px at 50% 80%, rgba(72, 72, 90, 0.55), rgba(72, 72, 90, 0) 100%);
+}
+
+.mediaBody {
+  position: relative;
+  max-width: 1440px;
+  height: 700px;
+  margin: 34px auto 0;
+}
+
+.ipad {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 690px;
+  height: auto;
+}
+
+.mediaLogos {
+  position: absolute;
+  top: 66px;
+  left: 765px;
+  width: 615px;
+}
+
+.mediaLogos h3 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+  margin-bottom: 30px;
+}
+
+.mediaRow {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 55px;
+  margin-bottom: 26px;
+}
+
+.mediaRow:last-child {
+  justify-content: flex-start;
+  gap: 38px;
+}
+
+.mediaRow img {
+  height: auto;
+}
+
+.mediaMore {
+  font-size: 24px;
+}
+
+/* ---------- UI/UX ---------- */
+.uiux {
+  padding-bottom: 130px;
+  --bg:
+    radial-gradient(420px 380px at 50% 28%, rgba(112, 145, 66, 0.7), rgba(112, 145, 66, 0) 100%),
+    radial-gradient(700px 360px at 50% 60%, rgba(72, 72, 95, 0.55), rgba(72, 72, 95, 0) 100%);
+}
+
+.uiuxText {
+  position: relative;
+  z-index: 2;
+  padding-top: 20px;
+}
+
+.uiuxText .tags {
+  max-width: 660px;
+  margin: 10px auto 0;
+  font-size: 20px;
+  line-height: 25px;
+}
+
+/* ---------- LET'S BUILD TOGETHER ---------- */
+.cta {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px 88px 200px;
+}
+
+.cta h2 {
+  font-size: 80px;
+  font-weight: 600;
+  line-height: 95px;
+  letter-spacing: -0.01em;
+}
+
+.ctaQuestion,
+.ctaClosing {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.ctaQuestion {
+  margin-top: 80px;
+  padding-left: 3px;
+}
+
+.ctaText {
+  max-width: 1145px;
+  margin-top: 36px;
+  padding-left: 11px;
+  font-size: 24px;
+  line-height: 33px;
+}
+
+.ctaClosing {
+  margin: 48px 0 52px;
+  padding-left: 9px;
+}
+
+.cta > :last-child {
+  margin-left: 4px;
+}
+
+/* =========================== PONSEL =========================== */
+@media (max-width: 899px) {
+  .sectionTitle {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .tags,
+  .eventTags,
+  .uiuxText .tags {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 19px;
+  }
+
+  .hero {
+    height: 700px;
+    min-height: 0;
+    padding: 60px 28px 0;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  /* Tanpa overflow:hidden supaya cahaya latar tidak terpotong jadi batas kotak */
+  .provide {
+    height: auto;
+    display: block;
+    padding: 40px 28px 60px;
+  }
+
+  .provide > div[aria-hidden="true"] {
+    transform: scale(0.55);
+    transform-origin: top left;
+  }
+
+  .provideText {
+    padding-top: 0;
+  }
+
+  .provideText h2 {
+    font-size: 28px;
+    line-height: 35px;
+  }
+
+  .provideText p {
+    margin-top: 12px;
+    font-size: 16px;
+  }
+
+  .provideList {
+    padding-top: 36px;
+  }
+
+  .provideList li {
+    font-size: 22px;
+    line-height: 40px;
+  }
+
+  .provideList p {
+    margin-top: 16px;
+    font-size: 16px;
+  }
+
+  .clients {
+    padding: 100px 20px 0;
+  }
+
+  .clients .sectionTitle {
+    max-width: 320px;
+    line-height: 30px;
+  }
+
+  /* Ponsel: semua logo klien dalam grid 3 kolom yang rapi, tampil diam */
+  .clientGrid {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* baris terakhir yang tidak penuh tetap di tengah */
+    align-items: center;
+    row-gap: 30px;
+    max-width: 360px;
+    margin: 44px auto 0;
+  }
+
+  .clientGrid li {
+    flex: 0 0 33.333%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 7px;
+  }
+
+  .clientGrid img {
+    width: calc(var(--w) * 0.5);
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Logo media di HP juga tampil diam (tanpa animasi muncul) */
+  .mediaRow > li {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .more {
+    margin-top: 40px;
+    font-size: 16px;
+  }
+
+  /* Ponsel: judul & teks dulu, lalu kedua laptop berdampingan */
+  .seo {
+    height: auto;
+    margin-top: 100px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  /* Cahaya hijau (warna sama dengan desktop) di belakang laptop, bergerak pelan */
+  .seo {
+    position: relative;
+  }
+
+  .seo > div[aria-hidden="true"] {
+    top: auto !important;
+    bottom: -60px;
+    left: 50% !important;
+    width: 460px !important;
+    height: 340px !important;
+    margin-left: -230px;
+  }
+
+  .seo > :not([aria-hidden="true"]) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .seoText {
+    order: -1;
+    width: 100%;
+    padding: 0 28px;
+  }
+
+  .seoBody {
+    max-width: 330px;
+    margin-top: 24px;
+    font-size: 16px;
+    line-height: 21px;
+  }
+
+  .events {
+    padding: 80px 16px 0;
+  }
+
+  .eventGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 24px;
+  }
+
+  .eventCard > * {
+    height: 170px;
+  }
+
+  .eventCaption {
+    left: 14px;
+    bottom: 10px;
+    font-size: 13px;
+  }
+
+  .media {
+    height: auto;
+    padding: 110px 0 80px;
+    --bg:
+      radial-gradient(300px 280px at 50% 38%, rgba(112, 145, 66, 0.55), rgba(112, 145, 66, 0) 100%),
+      radial-gradient(420px 320px at 50% 78%, rgba(72, 72, 90, 0.5), rgba(72, 72, 90, 0) 100%);
+  }
+
+  .media::before,
+  .uiux::before {
+    inset: -80px -40%;
+  }
+
+  .mediaBody {
+    height: auto;
+    margin-top: 16px;
+    padding: 0 20px;
+  }
+
+  .ipad,
+  .mediaLogos {
+    position: static;
+  }
+
+  .ipad {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .mediaLogos {
+    width: 100%;
+    margin-top: 24px;
+  }
+
+  .mediaLogos h3 {
+    font-size: 18px;
+    line-height: 23px;
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  /* Ponsel: susunan baris sama seperti desktop, logo diperkecil supaya tiap baris muat */
+  .mediaRow,
+  .mediaRow:last-child {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 16px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .mediaRow img {
+    width: auto;
+    height: 17px;
+  }
+
+  .mediaMore {
+    font-size: 16px;
+  }
+
+  .uiux {
+    height: auto;
+    padding-bottom: 40px;
+    --bg:
+      radial-gradient(260px 220px at 50% 28%, rgba(112, 145, 66, 0.55), rgba(112, 145, 66, 0) 100%),
+      radial-gradient(340px 220px at 50% 66%, rgba(72, 72, 95, 0.5), rgba(72, 72, 95, 0) 100%);
+  }
+
+  .uiuxText {
+    padding: 60px 28px 0;
+  }
+
+  /* Dua perangkat berdampingan, tinggi sama → ukuran tampak setara */
+  .devicePair {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    margin-top: 28px;
+    padding: 0 16px;
+  }
+
+  .devicePair img {
+    width: auto;
+    height: 39vw;
+    max-height: 200px;
+  }
+
+  .cta {
+    padding: 80px 28px 100px;
+  }
+
+  .cta h2 {
+    font-size: 40px;
+    line-height: 48px;
+  }
+
+  .ctaQuestion,
+  .ctaClosing {
+    font-size: 18px;
+  }
+
+  .ctaQuestion {
+    margin-top: 36px;
+    padding-left: 0;
+  }
+
+  .ctaText {
+    margin-top: 14px;
+    padding-left: 0;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .ctaClosing {
+    margin: 24px 0 26px;
+    padding-left: 0;
+  }
+
+  .cta > :last-child {
+    margin-left: 0;
+  }
+}

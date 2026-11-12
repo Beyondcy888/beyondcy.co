@@ -1,0 +1,40 @@
+/* Lingkaran cahaya: hijau di tengah, ungu di tepi (warna brand), di belakang konten */
+.glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 620px;
+  height: 620px;
+  margin: -310px 0 0 -310px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgba(158, 205, 90, 0.16) 0%,
+    rgba(158, 205, 90, 0.08) 35%,
+    rgba(104, 109, 175, 0.07) 60%,
+    rgba(104, 109, 175, 0) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  will-change: transform, opacity;
+}
+
+.on {
+  opacity: 1;
+}
+
+/* HP: lebih kecil & sedikit lebih terang supaya terasa saat disentuh */
+.touch {
+  width: 380px;
+  height: 380px;
+  margin: -190px 0 0 -190px;
+  background: radial-gradient(
+    closest-side,
+    rgba(158, 205, 90, 0.24) 0%,
+    rgba(158, 205, 90, 0.1) 40%,
+    rgba(104, 109, 175, 0.08) 65%,
+    rgba(104, 109, 175, 0) 100%
+  );
+}

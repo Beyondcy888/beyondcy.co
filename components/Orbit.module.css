@@ -1,0 +1,95 @@
+.svg {
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Seluruh sistem orbit berputar sedikit mengikuti scroll (--spin diisi JS) */
+.system {
+  transform-box: view-box;
+  transform-origin: 900px 600px;
+  transform: rotate(var(--spin, 0deg));
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Ketebalan garis dijaga tetap di layar lewat --k (= 1 / skala orbit, diisi Orbit.js).
+   Tidak memakai vector-effect: non-scaling-stroke karena itu membuat gradasi warna
+   (hijau di ujung orbit) salah posisi saat orbit diperkecil di HP. */
+.line,
+.comet path {
+  fill: none;
+}
+
+/* Garis orbit: tergambar perlahan saat pertama terlihat, lalu tetap tergambar */
+.line {
+  stroke: url(#orbit-stroke);
+  stroke-width: calc(1px * var(--k, 1));
+  stroke-opacity: 0.9;
+  /* stroke-dasharray & --len (panjang asli garis) diisi Orbit.js */
+  stroke-dashoffset: var(--len, 0);
+  visibility: hidden;
+  transition: stroke-dashoffset 2.6s cubic-bezier(0.65, 0, 0.35, 1);
+  transition-delay: calc(var(--i) * 0.25s);
+}
+
+.ready .line {
+  visibility: visible;
+}
+
+.drawn .line {
+  stroke-dashoffset: 0;
+}
+
+/* Tiap orbit berayun pelan, ritmenya berbeda-beda (jalan hanya saat terlihat) */
+.ring {
+  transform-box: view-box;
+  animation: sway var(--sway) ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * -4s);
+  animation-play-state: paused;
+}
+
+.inView .ring {
+  animation-play-state: running;
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(-2deg);
+  }
+  to {
+    transform: rotate(2deg);
+  }
+}
+
+/* Cahaya: satu per garis orbit, memutar PENUH mengelilingi ellips tanpa henti.
+   Gerakannya diatur di Orbit.js (Web Animations) — sama di desktop & HP. */
+.comet {
+  opacity: 0;
+  transition: opacity 1.2s ease 2.2s;
+}
+
+.ready.drawn .comet {
+  opacity: 1;
+}
+
+.comet path {
+  stroke: #e6ffc9;
+  stroke-linecap: round;
+}
+
+/* Pengaturan "kurangi gerakan": garis langsung tampil, tanpa gerak */
+@media (prefers-reduced-motion: reduce) {
+  .line {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+  .ring,
+  .comet path {
+    animation: none;
+  }
+  .comet {
+    display: none;
+  }
+  .system {
+    transform: none;
+  }
+}

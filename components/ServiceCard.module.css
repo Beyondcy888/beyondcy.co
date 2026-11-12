@@ -1,0 +1,244 @@
+/* Kartu kaca dengan gradasi: kiri-atas gelap, kiri-bawah ungu, kanan hijau. */
+.card {
+  position: relative;
+  display: block;
+  width: 351px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  overflow: hidden;
+  /* Gradasi dasar gelap → ungu; cahaya hijau ada di ::after supaya bisa bergerak */
+  background: linear-gradient(162deg, rgba(16, 16, 19, 0.88) 12%, rgba(96, 100, 165, 0.95) 100%);
+  isolation: isolate;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.5s ease,
+    border-color 0.5s ease;
+}
+
+/* Cahaya hijau gradasi kartu — bergerak pelan & tipis (warna sama seperti desain) */
+.card::after {
+  content: "";
+  position: absolute;
+  /* jauh lebih lebar dari kartu → saat bergeser, tepi lapisan tak pernah masuk kartu */
+  inset: -40%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(52.5% 50% at 77.5% 62.5%, rgba(130, 170, 100, 0.92) 0%, rgba(130, 170, 100, 0) 100%);
+  will-change: transform;
+  animation: cardGlow 6s ease-in-out infinite alternate;
+  animation-delay: calc(var(--mobile-order, 1) * -1.6s);
+}
+
+@keyframes cardGlow {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-10%, -7%, 0) scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card::after {
+    animation: none;
+  }
+}
+
+/* Cahaya sorot yang mengikuti kursor (posisi dari --mx / --my) */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgba(230, 255, 200, 0.16), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+@media (hover: hover) and (min-width: 900px) {
+  .card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(200, 235, 150, 0.45);
+    box-shadow:
+      0 24px 60px -24px rgba(158, 205, 90, 0.55),
+      0 0 0 1px rgba(158, 205, 90, 0.08);
+  }
+
+  .card:hover::before {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+  .card:hover {
+    transform: none;
+  }
+}
+
+/* Kepala kartu: panel kaca dengan sudut bawah membulat */
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 147px;
+  padding: 30px 20px 26px;
+  text-align: left;
+  border-radius: 0 0 16px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Panah ↗ penanda bisa diklik (muncul saat hover di desktop) */
+.go {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.card:hover .go,
+.card:focus-visible .go {
+  opacity: 1;
+  transform: none;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-green);
+  outline-offset: 3px;
+}
+
+.icons {
+  display: flex;
+  gap: 6px;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+}
+
+.rule {
+  display: block;
+  width: 74px;
+  height: 1px;
+  margin: 18px 0 20px;
+  background: #fff;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 25px;
+}
+
+.title small {
+  margin-left: 9px;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.body {
+  padding: 30px 20px 20px;
+  font-size: 12px;
+  line-height: 15px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.body ul {
+  list-style: none;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.body li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.check {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+/* "The goal is made a brand…" — kapsul kaca gelap */
+.highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 21px;
+  padding: 10px 16px 10px 10px;
+  border-radius: 10px;
+  background: rgba(10, 10, 10, 0.82);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 16px;
+  color: #fff;
+}
+
+.bolt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: #ececec;
+  color: #0a0a0a;
+  font-size: 11px;
+}
+
+/* ---------- Ponsel ---------- */
+@media (max-width: 899px) {
+  .slot {
+    order: var(--mobile-order);
+    width: 100%;
+    max-width: 351px;
+  }
+
+  /* HP: tanpa backdrop-filter (berat); latar gradasi kartu sudah hampir tidak tembus */
+  .card {
+    width: 100%;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* HP: kartu lengkap seperti desktop (kepala + keterangan) */
+  .body {
+    padding: 22px 20px 20px;
+  }
+
+  /* Di ponsel panah selalu terlihat samar supaya orang tahu kartu bisa diketuk */
+  .go {
+    opacity: 0.55;
+    transform: none;
+  }
+
+  .card:active {
+    transform: scale(0.98);
+  }
+}

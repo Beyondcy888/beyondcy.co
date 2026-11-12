@@ -1,0 +1,50 @@
+/* Selalu tepat di tengah horizontal */
+.wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 48px;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.arrow {
+  pointer-events: auto;
+  display: block;
+  font-size: 32px;
+  line-height: 0;
+  color: #fff;
+  animation: bob 2.4s ease-in-out 3s infinite;
+  transition: color 0.3s ease;
+}
+
+.arrow:hover {
+  color: var(--color-green);
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@media (max-width: 899px) {
+  .wrap {
+    bottom: 28px;
+  }
+  .hideMobile {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
+    animation: none;
+  }
+}

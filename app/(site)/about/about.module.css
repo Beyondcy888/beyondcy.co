@@ -1,0 +1,130 @@
+/* Desain desktop 1440px & ponsel 402px */
+.intro {
+  padding: 320px 20px 0;
+  text-align: center;
+}
+
+.lead {
+  max-width: 1100px;
+  margin: 0 auto;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.because {
+  margin-top: 60px;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.tagline {
+  margin-top: 4px;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 40px;
+  color: var(--color-green);
+}
+
+/* "It's who we are." bercahaya lembut berulang */
+.taglineGlow[data-visible] {
+  animation: taglineGlow 5s ease-in-out 1.2s infinite;
+}
+
+@keyframes taglineGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 0 rgba(158, 205, 90, 0);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(158, 205, 90, 0.6);
+  }
+}
+
+.logoWrap {
+  margin-top: 100px;
+}
+
+.logo {
+  width: 95px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.line {
+  display: block;
+}
+
+.statement {
+  padding: 800px 20px 290px;
+  text-align: center;
+}
+
+.statement h1 {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 63px;
+  letter-spacing: -0.01em;
+  margin-bottom: 76px;
+}
+
+.brands {
+  color: #8aa47f;
+}
+
+.buzz {
+  color: #6c73b2;
+}
+
+/* ================= PONSEL ================= */
+@media (max-width: 899px) {
+  .intro {
+    padding: 95px 40px 0;
+  }
+
+  .founded {
+    display: block;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+  }
+
+  .connect {
+    display: block;
+    max-width: 300px;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .because {
+    max-width: 260px;
+    margin: 22px auto 0;
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  .tagline {
+    margin-top: 20px;
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  .logoWrap {
+    margin-top: 48px;
+  }
+
+  .logo {
+    width: 60px;
+  }
+
+  .statement {
+    padding: 235px 16px 135px;
+  }
+
+  .statement h1 {
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 26px;
+  }
+}

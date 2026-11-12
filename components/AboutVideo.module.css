@@ -1,0 +1,66 @@
+/* Desktop: video memenuhi lebar layar, tinggi 1024px (desain 1440×1024) */
+.hero {
+  position: relative;
+  height: 1024px;
+  max-height: 100vh;
+  min-height: 600px;
+  background: #000;
+  overflow: hidden;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: videoIn 1.6s ease both;
+}
+
+@keyframes videoIn {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Tepi bawah video memudar ke latar halaman (tanpa batas kotak) */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 160px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(10, 10, 10, 0), #0a0a0a);
+}
+
+@media (max-width: 899px) {
+  .hero::after {
+    height: 110px;
+  }
+}
+
+/* Panah tetap terlihat di atas bingkai video yang terang */
+.hero a {
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.6));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video {
+    animation: none;
+  }
+}
+
+/* Ponsel: video vertikal 9:16 selebar layar (desain 402×715) */
+@media (max-width: 899px) {
+  .hero {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: 1080 / 1920;
+  }
+}

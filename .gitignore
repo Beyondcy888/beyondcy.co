@@ -1,10 +1,49 @@
-# local junk: never commit (running a dev server here creates .vite/)
-.vite/
+# dependencies
 node_modules/
-.DS_Store
-Thumbs.db
-*.log
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# secrets: this site has none, keep it that way
+# testing
+/coverage
+
+# Next.js: dev cache and build output (out/ is what GitHub Pages publishes; the workflow builds it)
+/.next/
+/out/
+/build
+
+# secrets: this site has none, keep it that way (.env.example, with placeholders only, may be committed)
 .env
 .env.*
+!.env.example
+*.pem
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# The team's original project folder, exactly as delivered (moved here on 12 Nov 2026 so that
+# nothing sits outside the three repo folders). Local only; safe to delete once the live site
+# has been checked.
+.original-from-team/
+
+# OS files and local junk
+.DS_Store
+Thumbs.db
+.vite/
+.vercel
+
+# pengaturan lokal editor / asisten
+.claude/
+.vscode/
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

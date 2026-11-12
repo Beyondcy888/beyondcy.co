@@ -1,0 +1,168 @@
+/* Desktop (lebar desain 1440px): kapsul kaca tinggi 58px,
+   45px dari atas, 33px dari kiri/kanan. Melayang (fixed) saat halaman digulir. */
+.nav {
+  position: fixed;
+  top: 45px;
+  left: var(--page-gutter);
+  right: var(--page-gutter);
+  z-index: 50;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 31px 0 45px;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  background: rgba(12, 12, 13, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  font-family: var(--font-ui);
+}
+
+.topFade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 45;
+  height: 130px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.96) 0%,
+    rgba(10, 10, 10, 0.9) 45%,
+    rgba(10, 10, 10, 0.55) 72%,
+    rgba(10, 10, 10, 0) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.topFadeOn {
+  opacity: 1;
+}
+
+@media (max-width: 899px) {
+  .topFade {
+    height: 112px;
+  }
+}
+
+.logo img {
+  width: 100px;
+  height: auto;
+}
+
+/* Menu di tengah layar */
+.links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 53px;
+  font-size: 16px;
+}
+
+/* Efek hover tidak ada di desain — sementara cukup sedikit redup. */
+.links a:hover,
+.mobileMenu a:not(.login):hover {
+  opacity: 0.7;
+}
+
+.login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 78px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--color-green-button);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.login:hover {
+  filter: brightness(1.1);
+}
+
+.menuButton,
+.mobileMenu,
+.overlay {
+  display: none;
+}
+
+/* ---------- Ponsel (desain: NAVBAR.png & screenshot mobile, lebar 402px) ---------- */
+@media (max-width: 899px) {
+  .nav {
+    top: 21px;
+    left: 12px;
+    right: 12px;
+    height: 57px;
+    padding: 0 22px 0 29px;
+  }
+
+  .links,
+  .loginDesktop {
+    display: none;
+  }
+
+  .menuButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -5px;
+  }
+
+  /* Ikon tiga garis abu-abu tebal */
+  .bars {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 34px;
+  }
+
+  .bars span {
+    height: 4px;
+    border-radius: 4px;
+    background: #6b6b6b;
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(10, 10, 10, 0.55);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  /* Menu rata kanan di bawah kapsul */
+  .mobileMenu {
+    position: fixed;
+    top: 90px;
+    right: 27px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  .mobileMenu a:not(.login) {
+    padding: 10px 0;
+    line-height: 21px;
+  }
+
+  .loginMobile {
+    margin-top: 9px;
+    border-radius: 12px;
+    background: #9ecd5a;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35), inset 0 -2px 3px rgba(0, 0, 0, 0.15);
+  }
+}
